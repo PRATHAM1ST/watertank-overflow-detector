@@ -1,14 +1,14 @@
-// require("dotenv").config();
-// const accountSid = process.env.TWILIO_ACCOUNT_SID;
-// const authToken = process.env.TWILIO_AUTH_TOKEN;
-// const twilioNumber = process.env.TWILIO_NUMBER;
-// const gmailSender = process.env.GMAIL_SENDER;
-// const gmailPass = process.env.GMAIL_PASSWORD;
-const accountSid = "AC7fd44883b369ff885e7fc83454485641";
-const authToken = "9fb0294d828955229cf6e690fd6ac74b";
-const twilioNumber = "+16515058524";
-const gmailSender = "the.listner01@gmail.com";
-const gmailPass = "ykwnqvdskicoufzb";
+require("dotenv").config();
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const twilioNumber = process.env.TWILIO_NUMBER;
+const gmailSender = process.env.GMAIL_SENDER;
+const gmailPass = process.env.GMAIL_PASSWORD;
+// const accountSid = "AC7fd44883b369ff885e7fc83454485641";
+// const authToken = "9fb0294d828955229cf6e690fd6ac74b";
+// const twilioNumber = "+16515058524";
+// const gmailSender = "the.listner01@gmail.com";
+// const gmailPass = "ykwnqvdskicoufzb";
 
 const client = require("twilio")(accountSid, authToken);
 const express = require("express");
