@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioNumber = process.env.TWILIO_NUMBER;
@@ -35,7 +35,7 @@ app.get("/call/:number", async (req, res) => {
 		console.log(receiver);
 		res.send(receiver);
 	} catch (e) {
-		res.statusCode(500).send({ err: "Something Went Wrong. Try again!" });
+		res.status(500).send({ err: "Something went wrong. Please try again." });
 	}
 });
 
@@ -51,7 +51,7 @@ app.get("/sms/:number", async (req, res) => {
 		console.log(receiver);
 		res.send(receiver);
 	} catch (e) {
-		res.statusCode(500).send({ err: "Something Went Wrong. Try again!" });
+		res.status(500).send({ err: "Something went wrong. Please try again." });
 	}
 });
 
@@ -77,7 +77,7 @@ app.get("/mail/:receiverMail", async (req, res) => {
 		let receiver = await transporter
 			.sendMail(mailOptions, (err, info) => {
 				if (err) {
-					res.statusCode(500).send({
+					res.status(500).send({
 						err: "Something Went Wrong. Try again!",
 						msg: err,
 					});
@@ -89,7 +89,7 @@ app.get("/mail/:receiverMail", async (req, res) => {
 			})
 
 	} catch (e) {
-		res.statusCode(500).send({ err: "Something Went Wrong. Try again!" });
+		res.status(500).send({ err: "Something went wrong. Please try again." });
 	}
 });
 
