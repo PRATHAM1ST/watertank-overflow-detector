@@ -4,11 +4,6 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioNumber = process.env.TWILIO_NUMBER;
 const gmailSender = process.env.GMAIL_SENDER;
 const gmailPass = process.env.GMAIL_PASSWORD;
-// const accountSid = "AC7fd44883b369ff885e7fc83454485641";
-// const authToken = "9fb0294d828955229cf6e690fd6ac74b";
-// const twilioNumber = "+16515058524";
-// const gmailSender = "the.listner01@gmail.com";
-// const gmailPass = "ykwnqvdskicoufzb";
 
 const client = require("twilio")(accountSid, authToken);
 const express = require("express");
@@ -32,8 +27,9 @@ app.get("/call/:number", async (req, res) => {
 			to: req.params.number,
 			from: twilioNumber,
 		});
-		console.log(receiver);
-		res.send(receiver);
+		res.send({
+			msg: "Call Sent successfully",
+		});
 	} catch (e) {
 		res.status(500).send({
 			err: "Something went wrong. Please try again.",
@@ -51,8 +47,9 @@ app.get("/sms/:number", async (req, res) => {
 			to: req.params.number,
 			from: twilioNumber,
 		});
-		console.log(receiver);
-		res.send(receiver);
+		res.send({
+			msg: "SMS Sent successfully",
+		});
 	} catch (e) {
 		res.status(500).send({
 			err: "Something went wrong. Please try again.",
@@ -79,16 +76,17 @@ app.get("/mail/:receiverMail", async (req, res) => {
 			subject: "TURN OFF ELECTRIC MOTOR",
 			text: "Water Tank is about to overflow, be quick and turn off the electric motor!",
 		};
-
-		let receiver = await transporter.sendMail(mailOptions, (err, info) => {
+		
+		transporter.sendMail(mailOptions, (err, info) => {
 			if (err) {
 				res.status(500).send({
 					err: "Something Went Wrong. Try again!",
 					msg: err,
 				});
 			} else {
-				console.log(info.response);
-				res.send(info.response);
+				res.send({
+					msg: "Mail Sent successfully",
+				});
 			}
 		});
 	} catch (e) {
