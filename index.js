@@ -12,6 +12,12 @@ var nodemailer = require("nodemailer");
 const app = express();
 const PORT = 5000;
 
+//--------------------- welcome ------------------------------------
+
+app.get("/", (req, res)=>{
+	res.send("Welcome to Water-Tank water level detector!!")
+})
+
 //--------------------- call ------------------------------------
 
 app.get("/call/:number", async (req, res) => {
