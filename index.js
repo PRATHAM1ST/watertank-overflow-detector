@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioNumber = process.env.TWILIO_NUMBER;
@@ -19,9 +19,9 @@ const PORT = 5000;
 
 //--------------------- welcome ------------------------------------
 
-app.get("/", (req, res)=>{
-	res.send("Welcome to Water-Tank water level detector!!")
-})
+app.get("/", (req, res) => {
+	res.send("Welcome to Water-Tank water level detector!!");
+});
 
 //--------------------- call ------------------------------------
 
@@ -35,7 +35,10 @@ app.get("/call/:number", async (req, res) => {
 		console.log(receiver);
 		res.send(receiver);
 	} catch (e) {
-		res.status(500).send({ err: "Something went wrong. Please try again." });
+		res.status(500).send({
+			err: "Something went wrong. Please try again.",
+			msg: e,
+		});
 	}
 });
 
@@ -51,7 +54,10 @@ app.get("/sms/:number", async (req, res) => {
 		console.log(receiver);
 		res.send(receiver);
 	} catch (e) {
-		res.status(500).send({ err: "Something went wrong. Please try again." });
+		res.status(500).send({
+			err: "Something went wrong. Please try again.",
+			msg: e,
+		});
 	}
 });
 
@@ -74,22 +80,21 @@ app.get("/mail/:receiverMail", async (req, res) => {
 			text: "Water Tank is about to overflow, be quick and turn off the electric motor!",
 		};
 
-		let receiver = await transporter
-			.sendMail(mailOptions, (err, info) => {
-				if (err) {
-					res.status(500).send({
-						err: "Something Went Wrong. Try again!",
-						msg: err,
-					});
-				}
-                else{
-                    console.log(info.response);
-                    res.send(info.response);
-                }
-			})
-
+		let receiver = await transporter.sendMail(mailOptions, (err, info) => {
+			if (err) {
+				res.status(500).send({
+					err: "Something Went Wrong. Try again!",
+					msg: err,
+				});
+			} else {
+				console.log(info.response);
+				res.send(info.response);
+			}
+		});
 	} catch (e) {
-		res.status(500).send({ err: "Something went wrong. Please try again." });
+		res.status(500).send({
+			err: "Something went wrong. Please try again.",
+		});
 	}
 });
 
