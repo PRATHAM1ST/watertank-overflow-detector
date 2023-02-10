@@ -14,7 +14,7 @@ String ServerName = "https://watertank-server.vercel.app";
 
 // Mobile number along with country code
 String OwnerPhNo = "+918200357641";
-String MailAdd = "prathamchudasama142@gmail.com";
+String MailAdd = "memoriesbackups2023@gmail.com";
 
 // Sensory data 
 float waterSensorValue = 0;
@@ -23,16 +23,18 @@ float voltageValue = 0;
 // Counter for confirming correct data
 int confirmationCounter = 0;
 
-// Waiting for water tank to chnage its state from full to not-full
-bool tankNotFull = true;
+// Waiting for water tank to change its state from full to not-full
+bool tankFull = false;
 
 
-void sendNotification(){
+void sendAlert(){
   // Checking the wifi connection and http connection
   if(WiFi.status()== WL_CONNECTED){
       HTTPClient http;
 
-      String serverPath = ServerName + "/mail/" + MailAdd;
+      String serverPath = ServerName + "/mail/" + MailAdd; // Setting Mail
+      // String serverPath = ServerName + "/sms/" + OwnerPhNo; // Setting SMS
+      // String serverPath = ServerName + "/call/" + OwnerPhNo; // Setting Call
       
       // Your Domain name with URL path or IP address with path
       http.begin(serverPath.c_str());
@@ -85,19 +87,19 @@ void loop() {
   // Checking if the tank is full
   if((waterSensorValue == 0) && (voltageValue < 0.001 || voltageValue >= 0)) 
   {
-    if (tankNotFull == true) confirmationCounter++;
+    if (tankFull == false) confirmationCounter++;
     else confirmationCounter = 0;
   }
 
   else{
-    tankNotFull = true;
+    tankFull = false;
   }
 
   // For safety we will check for n iteration (here 5) that the tank is really full and then send notification to the owner
   if(confirmationCounter == 5){    
-    tankNotFull = false;
+    tankFull = true;
     Serial.println("Sending Notification...");
-    sendNotification();
+    sendAlert();
   }
 
   delay(500);
