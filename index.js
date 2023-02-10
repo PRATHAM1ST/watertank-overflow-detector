@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 app.get("/call/:number", async (req, res) => {
 	try {
-		let receiver = await client.calls.create({
+		await client.calls.create({
 			twiml: "<Response><Say>Water Tank is about to overflow, be quick and turn off the electric motor!</Say></Response>",
 			to: req.params.number,
 			from: twilioNumber,
@@ -42,7 +42,7 @@ app.get("/call/:number", async (req, res) => {
 
 app.get("/sms/:number", async (req, res) => {
 	try {
-		let receiver = await client.messages.create({
+		await client.messages.create({
 			body: "Water Tank is about to overflow, be quick and turn off the electric motor!",
 			to: req.params.number,
 			from: twilioNumber,
